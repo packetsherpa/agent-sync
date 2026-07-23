@@ -1,0 +1,37 @@
+# Logs / cache / temp
+*.log
+logs/
+cache/
+tmp/
+.temp/
+.DS_Store
+
+# Local machine state
+local/
+.local/
+machine/
+host/
+*.local.md
+
+# Secrets / credentials
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+credentials/
+tokens/
+secrets/
+secret*
+*secret*
+*token*
+*credential*
+
+# Raw sessions unless explicitly curated
+sessions/raw/
+projects/*/*.jsonl
+projects/**/*.jsonl
+

@@ -1,0 +1,44 @@
+# {{ project_name }} — Agent Instructions
+
+{{ project_description }}
+
+This file is the single source of truth for any agent working in this repo
+(Claude Code, Codex, or others). `CLAUDE.md` is a symlink to this file. Global
+conventions live in `~/.claude/CLAUDE.md` — do not restate them here. This file
+covers only what is specific to {{ project_name }}.
+
+## What This Tool Is
+
+<!-- Fill in: purpose, the I/O contract (e.g. JSON in / JSON out on stdio),
+     key commands, and any gotchas a new agent must know. Keep it short. -->
+TODO: describe {{ project_name }}'s purpose and interface.
+
+## On Session Start
+{% if include_project_context %}
+1. Read `project-context.md` — the authoritative **live** state (what is in
+   flight, blocked, and the next starting point).
+2. Run `git status --short --branch` and `git log --oneline -5`.
+3. State the current task before starting; if it is not obvious, ask.
+{%- else %}
+1. Run `git status --short --branch` and `git log --oneline -5`.
+2. State the current task before starting; if it is not obvious, ask.
+{%- endif %}
+{% if include_agent_coordination %}
+## Coordination with Other Agents
+
+More than one agent may work this repo. To avoid conflict:
+
+- {% if include_project_context %}Treat `project-context.md` as the shared handoff document.{% else %}Keep a shared handoff note and read it at session start.{% endif %}
+- Do not assume the working tree reflects only your prior changes — check
+  `git status` and `git log` before editing.
+- Prefer clear task ownership before parallel work; avoid editing the same
+  files as another agent unless explicitly asked.
+{% endif %}
+## Durable Memory
+
+Durable facts, decisions, and landmines live in `.claude/memory/` as one-fact
+files (frontmatter: `name`, `description`, `metadata.type`; linked with
+`[[slug]]`). When something becomes durable, add a one-fact file and a line in
+`.claude/memory/MEMORY.md` — do not bury it in {% if include_project_context %}`project-context.md`{% else %}prose{% endif %}.
+
+@.claude/memory/MEMORY.md

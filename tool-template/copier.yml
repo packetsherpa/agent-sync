@@ -1,0 +1,52 @@
+# tool-template — copier configuration
+# Usage (this template ships inside agent-sync; use its local path):
+#   new repo:      uvx copier copy --trust ~/.claude/tool-template <dest>
+#   update a repo: uvx copier update --trust   (run inside a repo that has .copier-answers.yml)
+
+_subdirectory: template
+_templates_suffix: .jinja
+_answers_file: .copier-answers.yml
+
+# Preserve the CLAUDE.md/GEMINI.md -> AGENTS.md symlinks instead of dereferencing them.
+_preserve_symlinks: true
+
+# These are per-repo content: seed them once, never clobber on `copier update`.
+# Updates then only propagate NEW structural files, not customized content.
+_skip_if_exists:
+  - AGENTS.md
+  - project-context.md
+  - .claude/memory/MEMORY.md
+  - .gitignore
+  - pyproject.toml
+  - .python-version
+
+# ----- questions -----
+
+project_name:
+  type: str
+  help: Short tool name (used in titles, e.g. "my-tool")
+
+project_description:
+  type: str
+  help: One-line description of what this tool does
+
+include_project_context:
+  type: bool
+  help: Include a project-context.md live-state / handoff doc?
+  default: true
+
+include_agent_coordination:
+  type: bool
+  help: Will more than one agent (e.g. Claude AND Codex) work this repo?
+  default: false
+
+is_python:
+  type: bool
+  help: Is this a Python project? (adds pyproject.toml + uv scaffolding)
+  default: false
+
+python_version:
+  type: str
+  help: Python version to pin (.python-version)
+  default: "3.14"
+  when: "{{ is_python }}"

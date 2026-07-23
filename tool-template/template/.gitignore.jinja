@@ -1,0 +1,21 @@
+# Claude config: commit shared memory + settings; keep machine-local settings out
+.claude/*
+!.claude/memory/
+!.claude/settings.json
+.claude/settings.local.json
+CLAUDE.local.md
+
+{% if is_python %}
+# Python / uv — .venv is disposable (uv sync rebuilds); commit pyproject + uv.lock
+.venv/
+__pycache__/
+*.py[cod]
+{% endif %}
+# OS / editor
+.DS_Store
+
+# Secrets
+.env
+.env.*
+*.key
+*.pem

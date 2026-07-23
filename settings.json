@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(pwd)",
+      "Bash(cd *)",
+      "Bash(ls *)",
+      "Bash(tree *)",
+      "Bash(find *)",
+      "Bash(cat *)",
+      "Bash(less *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(sed -n *)",
+      "Bash(awk *)",
+      "Bash(jq *)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git branch *)",
+      "Bash(git remote -v)",
+      "Bash(npm test *)",
+      "Bash(npm run test *)",
+      "Bash(npm run lint *)",
+      "Bash(npm run build *)",
+      "Bash(pnpm test *)",
+      "Bash(pnpm run test *)",
+      "Bash(pnpm run lint *)",
+      "Bash(pnpm run build *)",
+      "Bash(yarn test *)",
+      "Bash(yarn lint *)",
+      "Bash(yarn build *)",
+      "Bash(cargo test *)",
+      "Bash(cargo check *)",
+      "Bash(cargo build *)",
+      "Bash(pytest *)",
+      "Bash(ruff check *)",
+      "Bash(mypy *)",
+      "Bash(go test *)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./credentials/**)",
+      "Read(./tokens/**)",
+      "Read(./*.key)",
+      "Read(./*.pem)"
+    ],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(mv *)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+      "Bash(sudo *)",
+      "Bash(launchctl *)",
+      "Bash(defaults write *)",
+      "Bash(plutil *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(nc *)",
+      "Bash(ssh *)",
+      "Bash(scp *)",
+      "Bash(rsync *)",
+      "Bash(git push *)",
+      "Bash(git reset *)",
+      "Bash(git clean *)",
+      "Bash(brew install *)",
+      "Bash(npm install *)",
+      "Bash(pnpm install *)",
+      "Bash(yarn install *)",
+      "Bash(pip install *)",
+      "Bash(pip3 install *)",
+      "Bash(cargo install *)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.config/**)",
+      "Read(~/.claude.json)",
+      "Read(~/.claude/backups/**)",
+      "Read(~/.claude/projects/**)",
+      "Read(~/.claude/sessions/**)",
+      "Read(~/.claude/session-env/**)",
+      "Read(~/.claude/shell-snapshots/**)",
+      "Edit(~/.claude/**)"
+    ],
+    "defaultMode": "acceptEdits",
+    "disableBypassPermissionsMode": "disable"
+  },
+  "model": "opus",
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "effortLevel": "high",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=\"$HOME/.claude/settings.json\"; d=\"$(dirname \"$(readlink \"$f\" 2>/dev/null || echo \"$f\")\")\"; [ -x \"$d/sync-on-start.sh\" ] && bash \"$d/sync-on-start.sh\" || true",
+            "timeout": 15,
+            "statusMessage": "Syncing config with origin…"
+          }
+        ]
+      }
+    ]
+  }
+}
